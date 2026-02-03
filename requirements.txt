@@ -1,0 +1,21 @@
+# Core dependencies (excludes torch - install separately with CPU-only)
+stable-baselines3==2.2.1
+gymnasium==0.29.1
+numpy>=1.24.0,<2.0.0
+
+# Web framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+pydantic-settings>=2.0.0
+python-dotenv==1.0.0
+
+# Database
+sqlalchemy>=2.0.0
+aiosqlite>=0.19.0
+
+# Authentication (Firebase Admin SDK)
+firebase-admin>=6.2.0
+
+# Security
+python-jose[cryptography]>=3.3.0

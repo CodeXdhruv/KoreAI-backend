@@ -1,7 +1,7 @@
 # Core dependencies (excludes torch - install separately with CPU-only)
 stable-baselines3==2.2.1
 gymnasium==0.29.1
-numpy>=1.24.0,<2.0.0
+numpy>=1.24.0
 
 # Web framework
 fastapi==0.109.0

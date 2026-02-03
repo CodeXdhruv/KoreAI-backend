@@ -4,6 +4,7 @@ Firebase Authentication Service
 Handles Firebase Admin SDK initialization and token verification.
 """
 import os
+import json
 import logging
 from typing import Optional
 from pathlib import Path
@@ -39,7 +40,20 @@ class FirebaseService:
             return True
         
         try:
-            # Try explicit path first
+            # 1. Try JSON content from environment variable (Best for Render/Heroku)
+            json_creds = os.getenv("FIREBASE_CREDENTIALS_JSON")
+            if json_creds:
+                try:
+                    cred_dict = json.loads(json_creds)
+                    cred = credentials.Certificate(cred_dict)
+                    firebase_admin.initialize_app(cred)
+                    cls._initialized = True
+                    logger.info("Firebase initialized from FIREBASE_CREDENTIALS_JSON env var")
+                    return True
+                except json.JSONDecodeError as e:
+                    logger.error(f"Failed to parse FIREBASE_CREDENTIALS_JSON: {e}")
+            
+            # 2. Try explicit path
             cred_path = os.getenv("FIREBASE_CREDENTIALS_PATH")
             if cred_path and Path(cred_path).exists():
                 cred = credentials.Certificate(cred_path)
